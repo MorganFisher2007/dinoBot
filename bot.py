@@ -31,7 +31,6 @@ class Env(gym.Env):
         path = os.path.abspath(os.getcwd()) + '/screenshot.png'
         self.driver.get_screenshot_as_file(path)
         img = Image.open(path)
-        img = img.resize((360, 225))
         transform = torchvision.transforms.Compose([
             transforms.Grayscale(), 
             transforms.ToTensor()])
@@ -49,10 +48,12 @@ class Env(gym.Env):
                 self.driver.get('chrome://dino/')
             except WebDriverException:
                 pass
+        self.driver.set_window_size(360, 225)
         self.driver.execute_script("document.visibilityState = 'visible';")
         ActionChains(self.driver).key_down(Keys.SPACE).key_up(Keys.SPACE).perform()
         self.done = False
         self.driver.execute_script('console.clear()')
+        start = time.time()
         self.observation = self.take_screenshot()
         return self.observation
 
@@ -109,14 +110,12 @@ if __name__ == '__main__':
     env = Env()
     for i_episode in range(20):
         observation = env.reset()
-        start = time.time()
         for t in range(100):
-            print(t, start-time.time())
-            env.render()
-            print(observation)
+            #env.render()
+            #print(observation)
             action = env.action_space.sample()
             observation, reward, done, info = env.step(action)
             if done:
-                print("Episode finished after {} timesteps".format(t+1))
+                #print("Episode finished after {} timesteps".format(t+1))
                 break
 env.close()
