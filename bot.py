@@ -7,7 +7,6 @@ import numpy as np
 from PIL import Image
 import stable_baselines3
 from selenium import webdriver
-from concurrent.futures import ThreadPoolExecutor
 import matplotlib.pyplot as plt
 from stable_baselines3 import DQN
 from torchvision import transforms
@@ -15,6 +14,7 @@ from gym.envs.registration import register
 from gym.spaces import Discrete, Box, Tuple
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from concurrent.futures import ThreadPoolExecutor
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import JavascriptException
